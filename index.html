@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เป็นแฟนกันมั้ยครับ?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --primary: #ff4d6d; --secondary: #ff85a2; --bg-color: #faecee; --text-color: #d63384; }
+        body { background-color: var(--bg-color); background-image: url("https://www.transparenttextures.com/patterns/wall-4-light.png"); font-family: 'Itim', cursive; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.05); transition: all 1s ease; }
+        h1 { color: var(--text-color); font-size: 3.5rem; margin-bottom: 30px; z-index: 10; transition: all 0.5s; }
+        .photo-group { background: transparent; padding: 20px; display: flex; gap: 15px; margin-bottom: 50px; transition: all 0.5s; }
+        .side-img { width: 200px; height: 300px; object-fit: cover; border-radius: 15px; border: 5px solid white; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .side-img:hover { transform: scale(1.05) rotate(2deg); }
+        button { padding: 15px 50px; font-size: 1.8rem; font-family: 'Itim', cursive; border: none; border-radius: 50px; cursor: pointer; position: absolute; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); transition: left 0.3s ease, top 0.3s ease, transform 0.2s, box-shadow 0.2s; }
+        #be { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; top: 80%; left: 35%; transform: translate(-50%, -50%); z-index: 20; }
+        #be:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4); }
+        #nah { background-color: white; color: var(--primary); border: 2px solid var(--primary); top: 80%; left: 65%; transform: translate(-50%, -50%); z-index: 19; }
+        @keyframes floatPolaroid { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-10px) rotate(-2deg); } }
+        @keyframes dropDown { 0% { transform: translateY(-100vh) scale(0.5) rotate(-20deg); opacity: 0; } 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; } }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        @keyframes floatHeart { 0% { transform: translateY(0) scale(0.5); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5) rotate(15deg); opacity: 0; } }
+        .cursor-heart { position: absolute; pointer-events: none; font-size: 24px; animation: floatHeart 1s ease-out forwards; z-index: 9999; text-shadow: 0 0 10px rgba(255, 77, 109, 0.5); }
+        .typing-effect { border-right: 4px solid white; white-space: nowrap; overflow: hidden; animation: blinkCursor 0.75s step-end infinite; }
+        @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: white; } }
+        #contract-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 10000; text-align: center; width: 80%; max-width: 400px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; pointer-events: none; }
+        #contract-modal.show { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+        .contract-btn { position: relative; background: #ff4d6d; color: white; border: none; padding: 10px 30px; border-radius: 20px; font-family: 'Itim'; font-size: 1.5rem; cursor: pointer; margin-top: 20px; box-shadow: none; transform: none; top: auto; left: auto; display: inline-block; }
+        .contract-btn:hover { background: #ff758f; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <h1 id="main-title" style="text-align: center; line-height: 1.3;">
+        Happy Birthday to US 🎂<br>
+        <span style="font-size: 2.2rem; color: #ff85a2;">เกิดวันเดียวกันแล้ว... เป็นแฟนกันด้วยเลยได้มั้ยครับ?</span>
+    </h1>
+    
+    <div class="photo-group">
+        <img src="pic1.jpg" class="side-img">
+        <img src="pic2.jpg" class="side-img">
+        <img src="pic3.jpg" class="side-img">
+    </div>
+
+    <button id="be">be</button>
+    <button id="nah">nah</button>
+
+    <div id="contract-modal">
+        <h2 style="color: #ff4d6d; margin-top: 0;">สัญญาการเป็นแฟนนะครับบบ</h2>
+        <ul style="text-align: left; color: #555; font-size: 1.2rem; line-height: 1.8;">
+            <li>ข้อ 1: จะรักคุณหยงตลอดไป</li>
+            <li>ข้อ 2: จะตั้งใจเรียนและเล่นเกมเป็นเพื่อนครับ</li>
+            <li>ข้อ 3: จะไม่สนใจผู้หญิงอื่นครับ</li>
+        </ul>
+        <button class="contract-btn" id="sign-btn">เซ็นรับทราบ ✍️</button>
+    </div>
+
+    <script>
+        const nah = document.getElementById('nah');
+        const be = document.getElementById('be');
+        const h1 = document.getElementById('main-title');
+        const contractModal = document.getElementById('contract-modal');
+        const signBtn = document.getElementById('sign-btn');
+        
+        const messages = ["แน่ใจหรอ?", "คิดอีกทีนะ...", "กดยากหน่อยนะ", "ยอมเถอะค้าบ", "ใจร้ายจัง", "ไม่ให้กดหรอก!", "กดปุ่มซ้ายดิ!"];
+        let msgIdx = 0;
+        let finalMode = false;
+
+        nah.addEventListener('mouseover', () => {
+            if(finalMode) return;
+            const x = Math.random() * (window.innerWidth - nah.offsetWidth);
+            const y = Math.random() * (window.innerHeight - nah.offsetHeight);
+            nah.style.left = `${x}px`;
+            nah.style.top = `${y}px`;
+            nah.innerHTML = messages[msgIdx % messages.length];
+            msgIdx++;
+            const currentScale = parseFloat(be.style.transform.split('scale(')[1]) || 1;
+            if(currentScale < 1.5) be.style.transform = `translate(-50%, -50%) scale(${currentScale + 0.1})`;
+        });
+
+        function typeWriter(text, i, fnCallback) {
+            if (i < (text.length)) {
+                h1.innerHTML = text.substring(0, i+1) + '<span class="typing-effect"></span>';
+                setTimeout(() => typeWriter(text, i + 1, fnCallback), 100);
+            } else if (typeof fnCallback == 'function') {
+                setTimeout(fnCallback, 700);
+            }
+        }
+
+        be.addEventListener('click', () => {
+            finalMode = true;
+            h1.innerHTML = "";
+            h1.style.color = "white";
+            h1.style.textShadow = "0 0 10px #ff4d6d, 0 0 20px #ff4d6d, 0 0 40px #ff85a2";
+            
+            typeWriter("ของขวัญปีนี้... ขอเป็นเธอได้มั้ยครับ🎁❤️", 0, () => {
+                h1.innerHTML = "ของขวัญปีนี้... ขอเป็นเธอได้มั้ยครับ🎁❤️";
+            });
+            
+            const photoGroup = document.querySelector('.photo-group');
+            photoGroup.style.background = "transparent";
+            photoGroup.style.border = "none";
+            photoGroup.style.boxShadow = "none";
+
+            photoGroup.innerHTML = `
+                <div id="pro-card" style="background: white; padding: 15px 15px 25px 15px; border-radius: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); width: 320px; transform-style: preserve-3d; animation: dropDown 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 100px; height: 30px; background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 2px; z-index: 10;"></div>
+                    <div style="position: relative; overflow: hidden; border-radius: 8px;">
+                        <img src="sad-hamster-tiktok.webp" style="width: 100%; height: 320px; object-fit: cover; display: block;">
+                        <div style="position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shine 3s infinite;"></div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; font-family: sans-serif;">
+                        <div style="text-align: left;">
+                            <div style="text-align: left;">
+                            <div style="font-weight: 900; color: #333; font-size: 1.1rem;">Best Gift Ever 🎂</div>
+                            <div style="color: #888; font-size: 0.8rem;">ฉลองวันเกิดด้วยกันนะครับ 🥺</div>
+                        </div>
+                        <div style="color: #1db954; font-size: 2rem;">▶️</div>
+                    </div>
+                    <div style="margin-top: 10px; width: 100%; height: 4px; background: #e6e6e6; border-radius: 2px;">
+                        <div style="width: 85%; height: 100%; background: #1db954; box-shadow: 0 0 5px #1db954;"></div>
+                    </div>
+                </div>
+            `;
+            
+            be.style.display = 'none';
+            nah.style.display = 'none';
+
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            setTimeout(() => confetti({ particleCount: 100, spread: 70, origin: { x: 0.2, y: 0.6 } }), 500);
+            setTimeout(() => confetti({ particleCount: 100, spread: 70, origin: { x: 0.8, y: 0.6 } }), 1000);
+            setTimeout(() => confetti({ particleCount: 150, spread: 100, origin: { y: 0.8 }, colors: ['#ff4d6d', '#ffffff'] }), 1500);
+
+            setTimeout(() => {
+                contractModal.classList.add('show');
+            }, 3500);
+
+            const card = document.getElementById('pro-card');
+            document.addEventListener('mousemove', (e) => {
+                if(!card) return;
+                let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            document.addEventListener('mouseleave', () => {
+                if(card) card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if(Math.random() > 0.5) return;
+                const heart = document.createElement('div');
+                const heartColors = ['💖', '💕', '💗', '💓', '✨'];
+                heart.innerHTML = heartColors[Math.floor(Math.random() * heartColors.length)];
+                heart.className = 'cursor-heart';
+                heart.style.left = (e.pageX - 10) + 'px';
+                heart.style.top = (e.pageY - 10) + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            });
+        });
+
+        signBtn.addEventListener('click', () => {
+            contractModal.innerHTML = '<h2 style="color: #1db954; margin: 20px 0;">✅ สัญญาเสร็จสมบูรณ์!</h2><p style="font-size: 1.5rem; color: #555;">รักคุณมากที่สุดเลยครับ</p>';
+            confetti({ particleCount: 100, spread: 360, origin: { y: 0.5 } });
+            setTimeout(() => contractModal.classList.remove('show'), 2500);
+        });
+    </script>
+</body>
+</html>
