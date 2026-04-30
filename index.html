@@ -67,17 +67,22 @@
         let msgIdx = 0;
         let finalMode = false;
 
-        nah.addEventListener('mouseover', () => {
-            if(finalMode) return;
-            const x = Math.random() * (window.innerWidth - nah.offsetWidth);
-            const y = Math.random() * (window.innerHeight - nah.offsetHeight);
-            nah.style.left = `${x}px`;
-            nah.style.top = `${y}px`;
-            nah.innerHTML = messages[msgIdx % messages.length];
-            msgIdx++;
-            const currentScale = parseFloat(be.style.transform.split('scale(')[1]) || 1;
-            if(currentScale < 1.5) be.style.transform = `translate(-50%, -50%) scale(${currentScale + 0.1})`;
-        });
+       function moveButton(e) {
+    if (finalMode) return;
+    if (e) e.preventDefault(); 
+    const x = Math.random() * (window.innerWidth - nah.offsetWidth);
+    const y = Math.random() * (window.innerHeight - nah.offsetHeight);
+    nah.style.left = `${x}px`;
+    nah.style.top = `${y}px`;
+    nah.innerHTML = messages[msgIdx % messages.length];
+    msgIdx++;
+    const currentScale = parseFloat(be.style.transform.split('scale(')[1]) || 1;
+    if(currentScale < 1.5) be.style.transform = `translate(-50%, -50%) scale(${currentScale + 0.1})`;
+}
+
+nah.addEventListener('mouseover', moveButton);
+nah.addEventListener('pointerdown', moveButton);
+nah.addEventListener('touchstart', moveButton);
 
         function typeWriter(text, i, fnCallback) {
             if (i < (text.length)) {
