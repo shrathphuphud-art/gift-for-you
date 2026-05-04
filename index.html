@@ -6,7 +6,40 @@
     <title>เป็นแฟนกันมั้ยครับ?</title>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
+    
+    <style> 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.love-box h2, .love-box p, h1, .birthday-text, .photo-group {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+h1 { animation-delay: 0.5s; }
+.love-box p { animation-delay: 1.5s; }
+.birthday-text { animation-delay: 2.5s; }
+.photo-group { animation-delay: 3.5s; }
+@keyframes raise {
+  0% { bottom: -10vh; opacity: 0; transform: scale(0); }
+  50% { opacity: 0.8; }
+  100% { bottom: 110vh; opacity: 0; transform: scale(1); }
+}
+
+.heart-particle {
+  position: fixed; bottom: -10vh;
+  color: rgba(255, 182, 193, 0.6); 
+  font-size: 20px; z-index: -1; 
+  animation: raise infinite linear;
+}
+.heart-particle:nth-child(1) { left: 10%; animation-duration: 7s; }
+.heart-particle:nth-child(2) { left: 25%; animation-duration: 6s; animation-delay: 1s; font-size: 25px; }
+.heart-particle:nth-child(3) { left: 40%; animation-duration: 8s; animation-delay: 2s; }
+.heart-particle:nth-child(4) { left: 55%; animation-duration: 6.5s; animation-delay: 0.5s; font-size: 15px; }
+.heart-particle:nth-child(5) { left: 70%; animation-duration: 7.5s; animation-delay: 3s; }
+.heart-particle:nth-child(6) { left: 85%; animation-duration: 6s; animation-delay: 1.5s; font-size: 22px; }
         :root { --primary: #ff4d6d; --secondary: #ff85a2; --bg-color: #faecee; --text-color: #d63384; }
         body { background-color: var(--bg-color); background-image: url("https://www.transparenttextures.com/patterns/wall-4-light.png"); font-family: 'Itim', cursive; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.05); transition: all 1s ease; }
         h1 { color: var(--text-color); font-size: 3.5rem; margin-bottom: 30px; z-index: 10; transition: all 0.5s; }
@@ -14,7 +47,27 @@
         .side-img { width: 200px; height: 300px; object-fit: cover; border-radius: 15px; border: 5px solid white; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .side-img:hover { transform: scale(1.05) rotate(2deg); }
         button { padding: 15px 50px; font-size: 1.8rem; font-family: 'Itim', cursive; border: none; border-radius: 50px; cursor: pointer; position: absolute; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); transition: left 0.3s ease, top 0.3s ease, transform 0.2s, box-shadow 0.2s; }
-        #be { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; top: 80%; left: 35%; transform: translate(-50%, -50%); z-index: 20; }
+    #be {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px;
+  font-size: 1.8rem;
+  font-family: 'Itim', cursive;
+  background: linear-gradient(45deg, #ff4d6d, #ff85a2);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+  animation: glowing 1.5s infinite alternate;
+}
+@keyframes glowing {
+  from { box-shadow: 0 0 5px rgba(255, 77, 109, 0.5); }
+  to { box-shadow: 0 0 20px rgba(255, 77, 109, 1), 0 0 30px rgba(255, 77, 109, 0.7); }
+}
         #be:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4); }
         #nah { background-color: white; color: var(--primary); border: 2px solid var(--primary); top: 80%; left: 65%; transform: translate(-50%, -50%); z-index: 19; }
         @keyframes floatPolaroid { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-10px) rotate(-2deg); } }
@@ -57,6 +110,12 @@
     </style>
 </head>
 <body>
+    <div class="heart-particle">❤</div>
+<div class="heart-particle">💖</div>
+<div class="heart-particle">❤</div>
+<div class="heart-particle">💗</div>
+<div class="heart-particle">❤</div>
+<div class="heart-particle">♥</div>
     <div class="love-box">
     <div class="floating-heart">💖</div>
     <h2>เป็นแฟนกันนะครับ </h2>
