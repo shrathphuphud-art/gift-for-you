@@ -113,6 +113,42 @@
             border: 2px solid var(--primary);
         }
 
+        #contract-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            width: 80%;
+            max-width: 400px;
+        }
+        #contract-modal.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .contract-btn {
+            background: #ff4d6d;
+            color: white;
+            padding: 10px 30px;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        .contract-btn:hover {
+            background: #ff758f;
+            transform: scale(1.05);
+        }
+
         .heart-particle {
             position: fixed; 
             bottom: -10vh;
@@ -156,10 +192,10 @@
 
     <div id="content-box">
         <h1>เป็นแฟนกันนะครับ</h1>
-        <p>อยู่คุยกันมาขนาดนี้แล้ว... ลองคบกันดูมั้ย?<br>รักนะครั๊บ</p>
+        <p>อยู่คุยกันมาขนาดนี้แล้ว... ลองคบกันดูมั้ย?<br>อิิอิิ</p>
         
         <h2 class="birthday-text">Happy Birthday to US <span class="party-hat">🥳</span></h2>
-        <p>เกิดวันเดียวกันแล้ว... เป็นแฟนกันด้วยเลยได้มั้ยครับ?</p>
+        <p>เกิดวันเดียวกันแล้วเนี่ยคกันเถ๊อะะ</p>
 
         <div class="photo-group">
             <img src="pic1.jpg" class="side-img" alt="pic1">
@@ -171,6 +207,17 @@
             <button id="be">be</button>
             <button id="nah">nah</button>
         </div>
+    </div>
+
+    <div id="contract-modal">
+        <h2 style="color: var(--primary);">📝 สัญญารักหยง</h2>
+        <p style="font-size: 1.3rem; color: #590d22; text-align: left; line-height: 1.6;">
+            ข้อ 1: จะรักในทุ๊กกกวัน<br>
+            ข้อ 2: จะโอ๋และอ้วนด้วยย<br>
+            ข้อ 3: อย่าหยุดรักผม<br>
+            <span style="font-size: 1rem; color: gray;">(เซ็นแล้วห้ามคืนคำนะครับ)</span>
+        </p>
+        <button class="contract-btn" id="sign-contract">เซ็นรับทราบ!</button>
     </div>
 
     <script>
@@ -196,14 +243,24 @@
             nahBtn.style.transform = 'none';
         });
 
-        const signBtn = document.getElementById('be');
+        const beBtn = document.getElementById('be');
+        const modal = document.getElementById('contract-modal');
+        const signBtn = document.getElementById('sign-contract');
         const contentBox = document.getElementById('content-box');
         
+        beBtn.addEventListener('click', () => {
+            modal.classList.add('show');
+        });
+
         signBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
             confetti({ particleCount: 150, spread: 360, origin: { y: 0.5 } });
+            
+            document.querySelectorAll('.heart-particle').forEach(el => el.style.display = 'none');
+
             contentBox.innerHTML = `
-                <h1 style="color: #ff4d6d; font-size: 4rem;">เย้! สัญญาเสร็จสมบูรณ์! 🎉</h1>
-                <p style="font-size: 2rem;">รักคุณมากที่สุดเลยยยย 💖</p>
+                <h1 style="color: #ff4d6d; font-size: 4rem; animation: fadeInUp 1s forwards;">เย้! สัญญาเสร็จสมบูรณ์! 🎉</h1>
+                <p style="font-size: 2rem; animation: fadeInUp 1s forwards; animation-delay: 0.5s;">รักคุณมากที่สุดเลยยยย 💖</p>
             `;
         });
     </script>
